@@ -15,10 +15,6 @@ class RemoteCollabote:
     def __init__(self, driver):
         self.driver = driver
         
-        # 원격 협업 메인 화면
-        self.collaborate_main = (
-            AppiumBy.XPATH, "//android.widget.TextView[@resource-id='com.virnect.remote.mobile2_onpremise_common:id/home_tv_title' and @text='원격 협업']")
-        
         # 원격 협업 리스트 화면
         self.collaborate_list = (AppiumBy.ID, "com.virnect.remote.mobile2_onpremise_common:id/fragment_container")
         
@@ -61,18 +57,19 @@ class RemoteCollabote:
         # 환경 설정 메뉴 
         self.preferences_menu = (AppiumBy.ID, "com.virnect.remote.mobile2_onpremise_common:id/home_iv_settings")
         
-    @given('Remote Mobile 원격 협업 메인 화면 확인')
-    def mobile_collabrate_displayed(self):
-        try:
-            main_collaborate = WebDriverWait(self.driver, 5).until(
-                EC.text_to_be_present_in_element((self.collaborate_main), '원격 협업'))
-            if main_collaborate:
-                print("원격 협업 메인 화면이 존재합니다.")
-            else:
-                print("원격 협업 메인 화면이 존재하지 않습니다.")
-            return main_collaborate
-        except NoSuchElementException:
-            print("원격 협업 메인 화면을 찾을 수 없습니다.")
+        
+    # @given('Remote Mobile 원격 협업 메인 화면 확인')
+    # def mobile_collabrate_displayed(self):
+    #     try:
+    #         main_collaborate = WebDriverWait(self.driver, 5).until(
+    #             EC.presence_of_element_located((self.collaborate_list)))
+    #         if main_collaborate.is_displayed():
+    #             print("원격 협업 메인 화면이 존재합니다.")
+    #         else:
+    #             print("원격 협업 메인 화면이 존재하지 않습니다.")
+    #         return main_collaborate.is_displayed
+    #     except NoSuchElementException:
+    #         print("원격 협업 메인 화면을 찾을 수 없습니다.")
             
     @when('원격 협업 리스트를 새로고침 시도')
     def remote_collaborate_re_flash(self):

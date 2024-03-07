@@ -2,6 +2,7 @@ from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.actions import interaction
 from selenium.webdriver.common.actions.action_builder import PointerInput
 from selenium.webdriver.support.ui import WebDriverWait
@@ -31,8 +32,9 @@ class RemoteLogin:
         # 워크스페이스 모달창 > Myworkspace
         self.My_Workspace = (AppiumBy.ID, "com.virnect.remote.mobile2_onpremise_common:id/rc_item_tv_title")
         
-        
-        
+        # 원격 협업 메인 화면
+        self.collaborate_main = (
+            AppiumBy.XPATH, "//android.widget.TextView[@resource-id='com.virnect.remote.mobile2_onpremise_common:id/home_tv_title' and @text='원격 협업']")
         
     @given('Remote 로그인 화면 확인')
     def login_screen_displayed(self):
@@ -162,3 +164,18 @@ class RemoteLogin:
             return My_Workspace
         except NoSuchElementException:
             print("워크스페이스 모달창에서 [My Workspace]를 터치하지 못했습니다.")
+            
+    @then('Remote Mobile 원격 협업 메인 화면 확인')
+    def mobile_collabrate_displayed(self):
+        try:
+            main_collaborate = WebDriverWait(self.driver, 5).until(
+                EC.text_to_be_present_in_element((self.collaborate_main), "원격 협업"))
+            # main_collaborate 자체를 사용하여 엘리먼트의 존재 여부를 확인
+            if main_collaborate:
+                print("원격 협업 메인 화면이 존재합니다.")
+            else:
+                print("원격 협업 메인 화면이 존재하지 않습니다.")
+            return main_collaborate
+        except TimeoutException:
+            print("원격 협업 메인 화면을 찾을 수 없습니다.")
+            return None
