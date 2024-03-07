@@ -273,15 +273,16 @@ class PermissionsLoginTest(unittest.TestCase):
     
     # 
     
-    # 
+    
 if __name__ == '__main__':
     reportFolder = "ReportTest"
+    verbosity_level = 2  # 원하는 verbosity 레벨을 설정하세요.
     if len(sys.argv) > 1 and sys.argv[1] == '--jenkins':
         # Jenkins에서 실행될 때
         loader = unittest.TestLoader()
         suite = loader.discover(start_dir='.', pattern='*mobile_PermiLogin_TestCase.py')
-        runner = HtmlTestRunner.HTMLTestRunner(output=reportFolder)
+        runner = HtmlTestRunner.HTMLTestRunner(output=reportFolder, verbosity=verbosity_level)
         result = runner.run(suite)
     else:
         # 직접 실행될 때
-        unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output=reportFolder))
+        unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output=reportFolder, verbosity=verbosity_level))
