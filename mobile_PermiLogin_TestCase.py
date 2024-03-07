@@ -1,5 +1,6 @@
 import unittest
 import HtmlTestRunner
+import sys
 # import time
 
 from appium import webdriver
@@ -275,4 +276,12 @@ class PermissionsLoginTest(unittest.TestCase):
     # 
 if __name__ == '__main__':
     reportFolder = "ReportTest"
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output=reportFolder))
+    if len(sys.argv) > 1 and sys.argv[1] == '--jenkins':
+        # Jenkins에서 실행될 때
+        loader = unittest.TestLoader()
+        suite = loader.discover(start_dir='.', pattern='*mobile_PermiLogin_TestCase.py')
+        runner = HtmlTestRunner.HTMLTestRunner(output=reportFolder)
+        result = runner.run(suite)
+    else:
+        # 직접 실행될 때
+        unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output=reportFolder))
