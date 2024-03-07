@@ -8,7 +8,7 @@ from selenium.webdriver.common.actions.action_builder import PointerInput
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from behave import given, when
+from behave import given
 # from behave import given, when, then
 
 class RemoteCollabote:
@@ -71,7 +71,7 @@ class RemoteCollabote:
     #     except NoSuchElementException:
     #         print("원격 협업 메인 화면을 찾을 수 없습니다.")
             
-    @when('원격 협업 리스트를 새로고침 시도')
+    @given('원격 협업 리스트를 새로고침 시도')
     def remote_collaborate_re_flash(self):
         try:
             re_flash = WebDriverWait(self.driver, 5).until(
